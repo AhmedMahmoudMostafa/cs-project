@@ -5,19 +5,20 @@ function Encrypt($paasword, $Key, $Result)
         $c = chr(ord($paasword[$i]) + $Key + $i);
         $Result .= $c;
     }
-    echo $Result;
     return $Result;
 }
-function add($email,$name,$c,$DoB,$fileName)
+function add($email,$name,$password,$DoB,$fileName)
 {
-    $record= $email ."~".$name."~".$c."~".$DoB;
-    Storerecord($fileName, $record);
-    if (searchUser($fileName, $email,$Search="~") == false) 
+    $id=lastid($fileName,"~");
+    $record= $id."~".$name."~".$email."~".$password."~".$DoB;
+    $data=samedate($fileName,"~",$email);
+    if($data == true)
+    {
+        echo"invalid email used befor";
+    }
+    else
     {
         Storerecord($fileName, $record);
-        return true;
-    } else {
-        return false;
     }
 }
 function storerecord($fileName,$record)
@@ -43,7 +44,6 @@ function searchUser($fileName,$Email,$Search)
     {
         $line = fgets($file);
         $i = strpos($line, $Search);
-        echo $i;
         if ($i >= 0 && $i != null) 
         {
 
@@ -52,5 +52,34 @@ function searchUser($fileName,$Email,$Search)
     }
     fclose($file);
     return false;
+}
+function lastid($fileName,$sapaertor)
+{
+    $file=fopen($fileName,"r+")or die("Unable to open file!");
+    $i=1;
+    while(!feof($file))
+    {
+        $line=fgets($file);
+        $Array=explode("~",$line);
+        if($Array[0]!="")
+        {
+            $lastid=$Array[0];
+        }
+    }
+    return $lastid+$i;
+}
+function samedate($fileName,$sapaertor,$email)
+{
+    $file=fopen($fileName,"r+") or die("Unable to open file!");
+    while(!feof($file))
+    {
+        $line=fgets($file);
+        $Array=explode("~",$line);
+        $Email=$Array[2];
+        if($Email==$email)
+        {
+            return true;
+        }
+    }
 }
 ?>
