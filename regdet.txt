@@ -1,0 +1,2 @@
+1,cs100,this course offers how to use a computer.
+2,cs101,this course offers shows how to make simple programs.
