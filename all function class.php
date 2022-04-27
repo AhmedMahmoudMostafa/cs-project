@@ -14,9 +14,9 @@ class username
    }
     function add($email)
 {
-    $id=lastid($this->fileManagerobj->fileName,"~");
-    $record= $this->record;
-    $data=samedate($this->fileManagerobj->fileName,"~",$this->email);
+    $id=$this->fileManagerobj->lastid($this->fileManagerobj->fileName,"~");
+    $record= $this->id."~".$this->record;
+    $data=$this->samedate();
     if($data == true)
     {
         echo"invalid email used befor";
@@ -148,7 +148,7 @@ function Login()
 }
 function Encrypt($Key, $Result)
 {
-    for ($i = 0; $i < strlen($this->paasword); $i++) {
+    for ($i = 0; $i < strlen($this->password); $i++) {
         $c = chr(ord($this->paasword[$i]) + $Key + $i);
         $Result .= $c;
     }
@@ -181,12 +181,12 @@ class fileManager
 }
 function lastid()
 {
-    $file=fopen($this->filename,"r+")or die("Unable to open file!");
+    $file=fopen($this->fileName,"r+")or die("Unable to open file!");
     $i=1;
     while(!feof($file))
     {
         $line=fgets($file);
-        $Array=explode($this->sapaertor,$line);
+        $Array=explode("~",$line);
         if($Array[0]!="")
         {
             $lastid=$Array[0];

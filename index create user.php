@@ -1,5 +1,10 @@
 <?php
-include_once "create.php";
+include_once "all function class.php";
+$fileName="user data.txt";
+$objfilemanager=new fileManager;
+$objfilemanager->fileName=$fileName;
+$objfilemanager->separator="~";
+$objuser=new username($fileName);
 $email=$_REQUEST["Email"];
 $name=$_REQUEST["FullName"];
 $pass=$_REQUEST["Password"];
@@ -9,8 +14,8 @@ $username=$_REQUEST["username"];
 $usertype=$_REQUEST["usertype"];
 $result=" ";
 $key=100;
-$fileName="user data.txt";
-$user=Encrypt($username, $key,$result);
+$user=$objuser->Encrypt($username, $key,$result);
+$record= $name."~".$email."~".$user."~".MD5($password)."~" .$usertype."~".$DoB;
 echo $user;
-add($email,$name,$password,$DoB,$user,$usertype,$fileName);
+$objuser->add($email);
 ?>
