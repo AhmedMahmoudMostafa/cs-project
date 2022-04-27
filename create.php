@@ -10,7 +10,7 @@ function Encrypt($paasword, $Key, $Result)
 function add($email,$name,$password,$DoB,$user,$usertype,$fileName)
 {
     $id=lastid($fileName,"~");
-    $record= $id."~".$name."~".$email."~".$user."~".MD5($password)."~" .$usertype."~"."~".$DoB;
+    $record= $id."~".$name."~".$email."~".$user."~".MD5($password)."~" .$usertype."~".$DoB;
     $data=samedate($fileName,"~",$email);
     if($data == true)
     {
@@ -75,8 +75,8 @@ function samedate($fileName,$sapaertor,$email)
     {
         $line=fgets($file);
         $Array=explode("~",$line);
-        $Email=$Array[2];
-        if($Email==$email)
+        echo $email ."<br>";
+        if($Array[2]==$email)
         {
             return true;
         }
