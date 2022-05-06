@@ -2,7 +2,7 @@
 include_once "delete.php";
 $fileName="user data.txt";
 $Separator="~";
-echo $_GET["ID"];
-$id=$_GET["ID"];
+echo $_REQUEST["id"];
+$id=$_REQUEST["id"];
 getRowById("user data.txt","~",$id);
 ?>

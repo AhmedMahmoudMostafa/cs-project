@@ -1,7 +1,4 @@
 <?php
-echo $_GET["ID"];
-$id=$_GET["ID"];
-getRowById("user data.txt","~",$id);
 function getRowById($fileName,$Separator,$id)
 {
 	
@@ -18,18 +15,16 @@ function getRowById($fileName,$Separator,$id)
   		
   		if ($ArrayLine[0]==$id)
   		{
-			del($myfile,$line);
+			del($fileName,$line);
 		}
   		
 	}
 	return False;
 }
-function del($fileName,$record)
-{
-    $contents = file_get_contents($fileName);
-    echo $contents;
-	$content = str_replace($record."/r/n", '', $contents);
-	file_put_contents($fileName, $content);
-    echo $contents;
+function del($file,$record)
+{	
+    $contents = file_get_contents($file);
+	$content = str_replace($record, '', $contents);
+	file_put_contents($file, $content);
 }
 ?>
