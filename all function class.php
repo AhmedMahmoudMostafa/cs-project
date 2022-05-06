@@ -17,7 +17,6 @@ class user1
     $id=$this->fileManagerobj->lastid();
     $this->record= $id."~".$this->record;
     $data=$this->samedate( $this->fileManagerobj->fileName,$this->fileManagerobj->separator,$this->email);
-
     if($data == true)
     {
         echo"invalid email used befor";
@@ -45,6 +44,32 @@ function searchUser($Search)
     fclose($file);
    
 }
+function logindata($file)
+{
+    $file=fopen($file,"r+") or die("Unable to open file!");
+    while(!feof($file))
+    {
+        $line=fgets($file);
+        $Array=explode("~",$line);
+        $email=$Array[1];
+        $passWord=$Array[3];
+        $this->id=$Array[0];
+        if($this->email==$email)
+        {
+            if(md5($this->password)==$passWord)
+            {
+                return $this->id;
+            }
+            else
+            {
+                echo "invalid password plases login again";
+                return -1;   
+            }
+
+        }
+    }
+    return -1;
+}
 function samedate()
 {
     $file=fopen($this->fileManagerobj->fileName,"r+") or die("Unable to open file!");
@@ -52,7 +77,7 @@ function samedate()
     {
         $line=fgets($file);
         $Array=explode("~",$line);
-        echo $this->email ."<br>";
+        echo $this->email ;
         if($Array[1]==$this->email)
         {
             return true;
@@ -99,28 +124,27 @@ function readlinebyid()
     }
     return false;
 } 
-function getRowById()
+function getRowById($id)
 {
 	
-	if ( !file_exists($this->fileManagerobj->fileName) ) {
+	if ( !file_exists( $this->fileManagerobj->fileName) ) {
        return 0;
       }		
 	
-	$myfile = fopen($this->fileManagerobj->fileName, "r+") or die("Unable to open file!");
+	$myfile = fopen( $this->fileManagerobj->fileName, "r+") or die("Unable to open file!");
 	$LastId=0;
 	while(!feof($myfile)) 
 	{
   		$line= fgets($myfile);
   		$ArrayLine=explode($this->fileManagerobj->separator,$line);
   		
-  		if ($ArrayLine[0]==$this->id)
-  		{
-			del($myfile,$line);
+  		if ($ArrayLine[0]==$id)
+  		{ 
+          return $line;
 		}
   		
 	}
 	return False;
-
 }
 function Login()
 {
@@ -176,10 +200,9 @@ class fileManager
     public $separator;
     function storerecord($record)
 {
-    
     $file=fopen($this->fileName,"a+");
     echo $record;
-    fwrite($file,$record."\r\n");
+    fwrite($file,$record."\r");
     fclose($file);
 }
 function lastid()
@@ -197,19 +220,18 @@ function lastid()
     }
     return $lastid+$i;
 }
-function login($record)
-{
-    $file=fopen($this->fileName,"a+");
-    fwrite($file,$record."\r\n");
-    fclose($file);
-}
-function del($fileName,$record)
-{
+
+function del($record)
+{	
     $contents = file_get_contents($this->fileName);
-    echo $contents;
-	$content = str_replace($record."/r/n", '', $contents);
-	file_put_contents($fileName, $content);
-    echo $contents;
+	$content = str_replace($record, '', $contents);
+	file_put_contents($this->fileName, $content);
+}
+function update($record,$update)
+{	
+    $contents = file_get_contents($this->fileName);
+	$content = str_replace($record, $update."\r\n", $contents);
+	file_put_contents($this->fileName, $content);
 }
 }
 ?>

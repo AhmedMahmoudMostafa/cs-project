@@ -1,14 +1,15 @@
 <?php
-include_once "login.php";
+include_once "all function class.php";
 $filename="login.txt";
-$email=$_REQUEST["Email"];
-$password=$_REQUEST["password"];
-$id=samedate("user data.txt","~",$email,md5($password));
+$objuser=new user1 ($filename);
+$objuser->email=$_REQUEST["Email"];
+$objuser->password=$_REQUEST["password"];
+$id=$objuser->logindata("user data.txt");
 $time = date('m-d-Y H-i-s A e');
-$record=$id."~".$email."~".$time;
+$record=$id."~".$objuser->email."~".$time;
 if($id>=0)
 {
-    login($filename,$record);
+    $objuser->fileManagerobj-> storerecord($record);
 }
 else
 {

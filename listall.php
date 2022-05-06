@@ -27,7 +27,7 @@
               
               $ArrayLine=explode("~",$line);
             
-                echo "<tr><td>" .$ArrayLine[0]."</td><td>" .$ArrayLine[1]."</td><td>" .$ArrayLine[2]."</td><td>" .$ArrayLine[3]."</td><td>" .$ArrayLine[4]."</td><td>" .$ArrayLine[5]."</td><td>" .$ArrayLine[6]."</td><td><a href=delete.php?ID=".$ArrayLine[0].">delete</a></td></tr>";
+                echo "<tr><td>" .$ArrayLine[0]."</td><td>" .$ArrayLine[1]."</td><td>" .$ArrayLine[2]."</td><td>" .$ArrayLine[3]."</td><td>" .$ArrayLine[4]."</td><td>" .$ArrayLine[5]."</td><td>" .$ArrayLine[6]."</td><td><a href=deleteindex.php?ID=".$ArrayLine[0].">delete</a></td></tr>";
             
             
               
