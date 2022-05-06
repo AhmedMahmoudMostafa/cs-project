@@ -26,6 +26,7 @@ function storerecord($fileName,$record)
     
     $file=fopen($fileName,"a+");
     fwrite($file,$record."\r\n");
+    echo"<br>";
     fclose($file);
 }
 function Decrypt($password, $Key,$Result)

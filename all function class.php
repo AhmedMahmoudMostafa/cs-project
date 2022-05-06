@@ -1,5 +1,5 @@
 <?php
-class username
+class user1
 {
    public $record;
    public $email;
@@ -12,18 +12,20 @@ class username
        $this->fileManagerobj->fileName=$filename;
        $this->fileManagerobj->separator="~";
    }
-    function add($email)
+    function add()
 {
-    $id=$this->fileManagerobj->lastid($this->fileManagerobj->fileName,"~");
-    $record= $this->id."~".$this->record;
-    $data=$this->samedate();
+    $id=$this->fileManagerobj->lastid();
+    $this->record= $id."~".$this->record;
+    $data=$this->samedate( $this->fileManagerobj->fileName,$this->fileManagerobj->separator,$this->email);
+
     if($data == true)
     {
         echo"invalid email used befor";
     }
     else
     {
-        Storerecord($this->fileManagerobj->fileName, $this->record);
+        echo $this->record;
+        $this->fileManagerobj->Storerecord( $this->record);
     }
 
 }
@@ -51,7 +53,7 @@ function samedate()
         $line=fgets($file);
         $Array=explode("~",$line);
         echo $this->email ."<br>";
-        if($Array[2]==$this->email)
+        if($Array[1]==$this->email)
         {
             return true;
         }
@@ -149,7 +151,7 @@ function Login()
 function Encrypt($Key, $Result)
 {
     for ($i = 0; $i < strlen($this->password); $i++) {
-        $c = chr(ord($this->paasword[$i]) + $Key + $i);
+        $c = chr(ord($this->password[$i]) + $Key + $i);
         $Result .= $c;
     }
     return $Result;
@@ -176,6 +178,7 @@ class fileManager
 {
     
     $file=fopen($this->fileName,"a+");
+    echo $record;
     fwrite($file,$record."\r\n");
     fclose($file);
 }
@@ -186,7 +189,7 @@ function lastid()
     while(!feof($file))
     {
         $line=fgets($file);
-        $Array=explode("~",$line);
+        $Array=explode($this->separator,$line);
         if($Array[0]!="")
         {
             $lastid=$Array[0];
