@@ -44,32 +44,7 @@ function searchUser($Search)
     fclose($file);
    
 }
-function logindata($file)
-{
-    $file=fopen($file,"r+") or die("Unable to open file!");
-    while(!feof($file))
-    {
-        $line=fgets($file);
-        $Array=explode("~",$line);
-        $email=$Array[1];
-        $passWord=$Array[3];
-        $this->id=$Array[0];
-        if($this->email==$email)
-        {
-            if(md5($this->password)==$passWord)
-            {
-                return $this->id;
-            }
-            else
-            {
-                echo "invalid password plases login again";
-                return -1;   
-            }
 
-        }
-    }
-    return -1;
-}
 function samedate()
 {
     $file=fopen($this->fileManagerobj->fileName,"r+") or die("Unable to open file!");
@@ -77,8 +52,21 @@ function samedate()
     {
         $line=fgets($file);
         $Array=explode("~",$line);
-        echo $this->email ;
+        $i= $this->email;
         if($Array[1]==$this->email)
+        {
+            return true;
+        }
+    }
+}
+function samedatelogout()
+{
+    $file=fopen($this->fileManagerobj->fileName,"r+") or die("Unable to open file!");
+    while(!feof($file))
+    {
+        $line=fgets($file);
+        $Array=explode("~",$line);
+        if($Array[1]==var_dump($this->email))
         {
             return true;
         }
@@ -148,17 +136,21 @@ function getRowById($id)
 }
 function Login()
 {
-    $file=fopen($this->fileManagerobj->fileName,"r+") or die("Unable to open file!");
-    while(!feof($file))
-    {
-        $line=fgets($file);
-        $Array=explode("~",$line);
-        $email=$Array[2];
-        $password=$Array[4];
+    $myfile=fopen($this->fileManagerobj->fileName,"r+") or die("Unable to open file!");
+    while(!feof($myfile)) 
+	{
+        $line=fgets($myfile);
+        echo $line."<br>";
+        $Array=explode($this->fileManagerobj->separator,$line);
+        $email=$Array[1];
+        echo $email."<br>";
+        $password=$Array[3];
+        echo $password."<br>";
         $id=$Array[0];
         if($this->email==$email)
         {
-            if($password==$this->passWord)
+            echo $this->password;
+            if($password==md5($this->password))
             {
                 return $id;
             }
@@ -202,7 +194,7 @@ class fileManager
 {
     $file=fopen($this->fileName,"a+");
     echo $record;
-    fwrite($file,$record."\r");
+    fwrite($file,$record."\r\n");
     fclose($file);
 }
 function lastid()
