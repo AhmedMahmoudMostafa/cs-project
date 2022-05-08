@@ -66,11 +66,13 @@ function samedatelogout()
     {
         $line=fgets($file);
         $Array=explode("~",$line);
-        if($Array[1]==var_dump($this->email))
+        $email=$Array[1];
+        if($email==$this->email)
         {
-            return true;
+            return $Array[0];
         }
     }
+    return -1;
 }
 function readlinebyemail()
 {
