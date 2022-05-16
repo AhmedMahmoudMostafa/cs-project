@@ -1,0 +1,9 @@
+cs244~object oriented software engineering
+cs223~computer orgnization
+cs232~multimedia
+cs215~database
+cs251~operating system
+cs283~web development
+mgt200~management
+1~hady2~A7A
+2~ddd
