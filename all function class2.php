@@ -50,12 +50,15 @@ function samedate()
     while(!feof($file))
     {
         $line=fgets($file);
+        echo $line ."<br>";
         $Array=explode("~",$line);
         if($Array[1]==$this->type)
         {
+            echo "ahmmedddddd";
             return true;
         }
     }
+    return false;
 }
 function samedatelogout()
 {

@@ -1,7 +1,7 @@
 <?php
-include_once "all function class.php";
-$fileName="user data.txt";
-$objuser=new user1($fileName);
+include_once "all function class2.php";
+$fileName="user type.txt";
+$objuser=new  usertype($fileName);
 $i=$objuser->getRowById($_GET["ID"]);
 $objuser->fileManagerobj->del($i);
 ?>
