@@ -1,5 +1,5 @@
 <?php
-class user1
+class course
 {
    public $record;
    public $email;
@@ -16,19 +16,18 @@ class user1
 {
     $id=$this->fileManagerobj->lastid();
     $this->record= $id."~".$this->record;
-    $data=$this->samedate( $this->fileManagerobj->fileName,$this->fileManagerobj->separator,$this->email);
+    $data=$this->samedate( $this->fileManagerobj->fileName,$this->fileManagerobj->separator,$this->courseName);
     if($data == true)
     {
-        echo"invalid email used befor";
+        echo"invalid course Name used before";
     }
     else
     {
         echo $this->record;
         $this->fileManagerobj->Storerecord( $this->record);
     }
-
 }
-function searchUser($Search)
+function searchcurseName($Search)
 {
     $file=fopen($this->fileManagerobj->fileName,"a+")or die("Unable to open file!");
     while (!feof($file))
@@ -41,10 +40,8 @@ function searchUser($Search)
             return $line;
         }
     }
-    fclose($file);
-   
+    fclose($file);  
 }
-
 function samedate()
 {
     $file=fopen($this->fileManagerobj->fileName,"r+") or die("Unable to open file!");
@@ -52,55 +49,33 @@ function samedate()
     {
         $line=fgets($file);
         $Array=explode("~",$line);
-        $i= $this->email;
-        if($Array[1]==$this->email)
+        $i= $this->courseName;
+        if($Array[1]==$this->courseName)
         {
             return true;
         }
     }
 }
-function samedatelogout()
+function readlinebycourseName()
 {
-    $file=fopen($this->fileManagerobj->fileName,"r+") or die("Unable to open file!");
-    while(!feof($file))
-    {
-        $line=fgets($file);
-        $Array=explode("~",$line);
-        $email=$Array[1];
-        if($email==$this->email)
-        {
-            return $Array[0];
-        }
-    }
-    return -1;
-}
-function readlinebyemail()
-{
-    if (!file_exists($this->fileManagerobj->fileName))
-    {
-        return 0;
-    }
-
     $myfile = fopen($this->fileManagerobj->fileName, "r+") or die("Unable to open file!");
     while (!feof($myfile)) 
     {
         $line = fgets($myfile);
-        $ArrayLine = explode($this->fileManagerobj->separator, $line);
-        if ($ArrayLine[2] ==$this->email)
+        $Array = explode($this->fileManagerobj->separator, $line);
+        if ($Array[1] ==$this->courseName)
         {
             return $line;
         }
-
     }
     return false;
 } 
-function readlinebyid()
+function readlinebycoursecode()
 {
     if (!file_exists($this->fileManagerobj->fileName))
     {
         return 0;
     }
-
     $myfile = fopen($this->fileManagerobj->fileName, "r+") or die("Unable to open file!");
     while (!feof($myfile)) 
     {
@@ -110,13 +85,11 @@ function readlinebyid()
         {
             return $line;
         }
-
     }
     return false;
 } 
-function getRowById($id)
+function getRowBycourseCode($id)
 {
-	
 	if ( !file_exists( $this->fileManagerobj->fileName) ) {
        return 0;
       }		
@@ -131,63 +104,11 @@ function getRowById($id)
   		if ($ArrayLine[0]==$id)
   		{ 
           return $line;
-		}
-  		
+		}	
 	}
 	return False;
 }
-function Login()
-{
-    $myfile=fopen($this->fileManagerobj->fileName,"r+") or die("Unable to open file!");
-    while(!feof($myfile)) 
-	{
-        $line=fgets($myfile);
-        echo $line."<br>";
-        $Array=explode($this->fileManagerobj->separator,$line);
-        $email=$Array[1];
-        echo $email."<br>";
-        $password=$Array[3];
-        echo $password."<br>";
-        $id=$Array[0];
-        if($this->email==$email)
-        {
-            echo $this->password;
-            if($password==md5($this->password))
-            {
-                return $id;
-            }
-            else
-            {
-                echo "invalid password plases login again";
-                return -1;   
-            }
-
-        }
-    }
-    return -1;
 }
-function Encrypt($Key, $Result)
-{
-    for ($i = 0; $i < strlen($this->password); $i++) {
-        $c = chr(ord($this->password[$i]) + $Key + $i);
-        $Result .= $c;
-    }
-    return $Result;
-}
-
-
-function Decrypt( $Key,$Result)
-{
-    for ($i = 0; $i < strlen($this->password); $i++) {
-        $c = chr(ord($this->password[$i]) - $Key - $i);
-        $Result .= $c;
-    }
-    return $Result;
-}
-}
-
-
-
 class fileManager
 {
     public $fileName;
@@ -214,7 +135,6 @@ function lastid()
     }
     return $lastid+$i;
 }
-
 function del($record)
 {	
     $contents = file_get_contents($this->fileName);
