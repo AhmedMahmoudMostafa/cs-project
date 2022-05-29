@@ -2,9 +2,8 @@
 class course
 {
    public $record;
-   public $email;
-   public $id;
-   public $password;
+   public $courseName;
+   public $courseCode;
    public $fileManagerobj;
    function __construct($filename)
    {
@@ -14,8 +13,7 @@ class course
    }
     function add()
 {
-    $id=$this->fileManagerobj->lastid();
-    $this->record= $id."~".$this->record;
+    $this->record=$this->record." ";
     $data=$this->samedate( $this->fileManagerobj->fileName,$this->fileManagerobj->separator,$this->courseName);
     if($data == true)
     {
@@ -119,21 +117,6 @@ class fileManager
     echo $record;
     fwrite($file,$record."\r\n");
     fclose($file);
-}
-function lastid()
-{
-    $file=fopen($this->fileName,"r+")or die("Unable to open file!");
-    $i=1;
-    while(!feof($file))
-    {
-        $line=fgets($file);
-        $Array=explode($this->separator,$line);
-        if($Array[0]!="")
-        {
-            $lastid=$Array[0];
-        }
-    }
-    return $lastid+$i;
 }
 function del($record)
 {	
