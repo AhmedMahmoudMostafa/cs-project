@@ -1,13 +1,12 @@
 <?php
 include_once "all function class.php";
 $fileName="course data.txt";
-session_start();
 $objcourse=new course($fileName);
-$objcourse->coursename=$_SESSION["courseName"];
-$courseName=$_REQUEST["courseName"];
-$coursecode=$_REQUEST["courseCode"];
-$record=$id."~".$courseName."~".$coursecode."~";
-$i=$objcourse->getRowBycourseCode($id);
-$objcourse->fileManagerobj->update($i,$record);
+$newcourseName=$_REQUEST["newcourseName"];
+$newcourseCode=$_REQUEST["newcourseCode"];
+$courseCode=$_REQUEST["courseCode"];
+$record=$newcourseCode."~".$newcourseName."~";
+$courseCode=$objcourse->getRowBycourseCode($courseCode);
+$objcourse->fileManagerobj->update($courseCode,$record);
 echo $record;
 ?>

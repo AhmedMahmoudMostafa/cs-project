@@ -25,7 +25,7 @@ class course
         $this->fileManagerobj->Storerecord( $this->record);
     }
 }
-function searchcurseName($Search)
+function searchcourseName($Search)
 {
     $file=fopen($this->fileManagerobj->fileName,"a+")or die("Unable to open file!");
     while (!feof($file))
@@ -48,7 +48,7 @@ function samedate()
         $line=fgets($file);
         $Array=explode("~",$line);
         $i= $this->courseName;
-        if($Array[1]==$this->courseName)
+        if($Array[0]==$this->courseName)
         {
             return true;
         }

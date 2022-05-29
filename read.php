@@ -1,42 +1,30 @@
-<?php
-function readlinebyemail($email,$Separator,$fileName)
-{
-    if (!file_exists($fileName))
-    {
-        return 0;
-    }
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>user data </h1>
+    <table border=2>
+    <tr>
+        <td>courseName</td>
+        <td>courseCode</td>
+    </tr>
+    <?php
+    $fileName="course data.txt";
     $myfile = fopen($fileName, "r+") or die("Unable to open file!");
-    while (!feof($myfile)) 
+    while(!feof($myfile)) 
     {
-        $line = fgets($myfile);
-        $ArrayLine = explode($Separator, $line);
-        if ($ArrayLine[2] == $email)
-        {
-            return $line;
-        }
-
+          $line= fgets($myfile);
+          $ArrayLine=explode("~",$line);
+            echo "<tr><td>" .$ArrayLine[0]."</td><td>" .$ArrayLine[1]."</td>";
+            echo "</tr>";
     }
-    return false;
-} 
-function readlinebyid($id,$Separator,$fileName)
-{
-    if (!file_exists($fileName))
-    {
-        return 0;
-    }
-
-    $myfile = fopen($fileName, "r+") or die("Unable to open file!");
-    while (!feof($myfile)) 
-    {
-        $line = fgets($myfile);
-        $ArrayLine = explode($Separator, $line);
-        if ($ArrayLine[0] == $id)
-        {
-            return $line;
-        }
-
-    }
-    return false;
-} 
-?>
+    fclose($myfile);
+    ?>
+    </table>
+</body>
+</html>
