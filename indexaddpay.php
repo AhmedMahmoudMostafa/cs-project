@@ -1,58 +1,50 @@
 <?php 
-include_once "class cash pay.php";
-include_once "class vodafone pay.php";
-include_once "class visa pay.php";
-include_once "class fawrypay.php";
-include_once "Class payment.php";
-include_once "donerpay.php";
+include_once "cashpay.php";
+include_once "vodafonepay.php";
+include_once "visapay.php";
+include_once "fawrypay.php";
+include_once "payment class.php";
+include_once "trippay.php";
 $method=$_REQUEST["id"];
 payment($method);
 function payment($method)
 {
     if($method=="cash")
     {
-        echo ""."<h1> cash payment </h1>";
-        $pay=new donerpay(new cashpayment());
+        $pay=new trippay(new cashpayment());
         $pay->value=$_REQUEST["value"];
         $v=$pay->Dpay();
+        echo $method;
+        //echo $v;
     }
     if($method=="fawry")
     {
-        echo ""."<h1> fawry payment </h1>";
-        $pay=new donerpay(new fawrypay);
+        $pay=new trippay(new fawrypay);
         $pay->value=$_REQUEST["value"];
-        $np=$_REQUEST["Number"];
-        $pf=$_REQUEST["fawry"];
+        //$pay->phonenumber=$_REQUEST[""];
+       // $pay->fawrynumber=$_REQUEST["fawry"];
         $v=$pay->Dpay();
         //$f=$pay->fawrypay();
-        echo "phone number"."<br>";
-        echo $np."<br>";
-        echo "fawry number"."<br>";
-        echo $pf;
-
+        //echo $v;
     }
     if($method=='vodafone')
     {
-        echo ""."<h1> vodafone payment </h1>";
-        $pay=new donerpay(new vodafonepay);
+        $pay=new trippay(new vodafonepay);
         $pay->value=$_REQUEST["value"];
-        $pn=$_REQUEST["phonenumber"];
+       // $pay->phonenumber=$_REQUEST["phone number"];
         $v=$pay->Dpay();
-        echo "phone number "."<br>";
-        echo $pn."<br>";
+        //echo $v;
     }
     if($method=="visa")
     {
-        echo ""."<h1> visa payment </h1>";
-        $pay=new donerpay(new visa);
+        $pay=new trippay(new visa);
         $pay->value=$_REQUEST["value"];
-        $pe=$_REQUEST["exp"];
-        $pc=$_REQUEST["card"];
+       // $pay->password=$_REQUEST["password"];
+        //$pay->expiration=$_REQUEST["exp"];
+       // $pay->cardNumber=$_REQUEST["card"];
         $v=$pay->Dpay();
-        echo "expiration"."<br>";
-        echo $pe."<br>";
-        echo "cardNumber"."<br>";
-        echo $pc ."<br>";
+        //echo $v;
     }
+    //$v=$pay->pay();
 }
 ?>
