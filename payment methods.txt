@@ -1,7 +1,1 @@
-1~cash~
-2~fawry~
-3~vodafone cash~
-4~visa~
-5~acash~
-6~icash~
-7~pcash~
+1~fawry~
