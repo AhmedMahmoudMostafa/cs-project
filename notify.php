@@ -1,31 +1,22 @@
 <?php
-include_once "O class tripnotify.php";
-class  tripnotify implements  itripnotify
+include_once  "obs class.php";
+include_once "sub.php";
+class noftfiy extends obs
 {
- 
-    public $obj=array();
-     public $state;
-    public function getstate($state)
-    {
-        return $this->state;
-    }
-    public function setstate($state)
-    {
-        $this->state=$state;
-        $this->notifyall();
-            
-    }
-    function notifyall()
-    {
-        foreach($this->obj as $obs)
-        {
-            $obs->update();
-        }
-    }
-    public function attach($obs)
-    {
-        array_push($this->obj,$obs);
-    }
-    
-    }
+	/**
+	 */
+	function __construct($u) {
+        $this->u=$u;
+        $this->u->attach($this);
+	}
+	/**
+	 *
+	 * @param mixed $o
+	 *
+	 * @return mixed
+	 */
+	function update() {
+        echo $this->u->getstate();
+	}
+}
 ?>
